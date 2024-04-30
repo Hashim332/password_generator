@@ -1,106 +1,73 @@
-const characters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
-const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"] 
-const symbols = ["~","`","!","@","#","$","%","^","&","*","(",")","_","-","+","=","{","[","}","]",",","|",":",";","<",">",".","?","/"];
+/*
+1 meter = 3.281 feet
+1 liter = 0.264 gallon
+1 kilogram = 2.204 pound
+*/
+
+const inputEl = document.getElementById("input-el")
+const inputBtn = document.getElementById("input-btn")
+const lengthEl = document.getElementById("length-conversion")
+const volumeEl = document.getElementById("volume-conversion")
+const massEl = document.getElementById("mass-conversion")
 
 
-let buttonEl = document.getElementById("button-el")
-let passwordEl1 = document.getElementById("password-el-1")
-let passwordEl2 = document.getElementById("password-el-2")
+
+lengthEl.innerHTML = "length goes here"
+volumeEl.innerHTML = "volume goes here"
+massEl.innerHTML = "mass goes here"
+
+inputBtn.addEventListener("click", function() {
+    renderLength(Number(inputEl.value))
+    renderVolume(Number(inputEl.value))
+    renderMass(Number(inputEl.value))
+    
+})
 
 
-// setting up slider for password length
-let slider = document.getElementById("slider-el");
-let sliderValue = document.getElementById("slider-value-el");
-let passwordLength = slider.value
-
-sliderValue.textContent = slider.value; 
-
-function updatePasswordLength() {
-    sliderValue.textContent = slider.value;
-    passwordLength = slider.value 
+function renderLength(integer) {
+    const lengthRatio = 3.281
+    let metresToFeet = integer * lengthRatio
+    let feetToMetres = integer / lengthRatio
+    
+    lengthEl.innerHTML = `${integer} metres = ${metresToFeet.toFixed(2)} feet | ${integer} feet = ${feetToMetres.toFixed(2)} metres`
 }
 
-slider.addEventListener("input", updatePasswordLength);
-
-// symbols toggle button 
-let symbolsButton = document.getElementById("symbols-button")
-let toggleSymbols = true
-
-function toggleSymbolsButton() {
+function renderVolume(integer) {
+    const volumeRatio = 0.264
+    let litresToGallons = integer * volumeRatio
+    let gallonsToLitres = integer / volumeRatio
     
-    toggleSymbols = !toggleSymbols
-    
-    symbolsButton.textContent = toggleSymbols ? "On" : "Off";
-    
-     if (toggleSymbols === true) {
-        this.style.backgroundColor = "#10B981"
-    } else {
-        this.style.backgroundColor = "#BE123C"
-    }
+    volumeEl.innerHTML = `${integer} litres = ${litresToGallons.toFixed(2)} gallons | ${integer} gallons = ${gallonsToLitres.toFixed(2)} litres`
 }
 
-symbolsButton.addEventListener("click", toggleSymbolsButton)
-
-// numbers toggle button
-let numbersButton = document.getElementById("numbers-button")
-let toggleNumbers = true
-
-function toggleNumbersButton() {
+function renderMass(integer) {
+    const massRatio = 2.204
+    let kilosToPounds = integer * massRatio
+    let poundsToKilos = integer / massRatio
     
-    toggleNumbers = !toggleNumbers
-    
-    numbersButton.textContent = toggleNumbers ? "On" : "Off";
-    
-    if (toggleNumbers === true) {
-        this.style.backgroundColor = "#10B981"
-    } else {
-        this.style.backgroundColor = "#BE123C"
-    }
+    massEl.innerHTML = `${integer} kilos = ${kilosToPounds.toFixed(2)} pounds | ${integer} pounds = ${poundsToKilos.toFixed(2)} kilos`
 }
 
-numbersButton.addEventListener("click", toggleNumbersButton)
 
-// creating and displaying passwords from conditions above
-
-function createPassword() {
-    allowedCharacters = characters
+// function renderElement(integer, ratio) {
+//     let converted1 = integer * ratio
+//     let converted2 = integer / ratio
     
-    if (toggleNumbers) {
-        allowedCharacters = allowedCharacters.concat(numbers)
-    }
+//     lengthEl.innerHTML = `${integer} metres = ${metresToFeet.toFixed(2)} feet | ${integer} feet = ${feetToMetres.toFixed(2)} metres`
     
-    if (toggleSymbols) {
-        allowedCharacters = allowedCharacters.concat(symbols)
-    }
-    
-    let password = ""
-    for (let i = 0; i < passwordLength; i++) {
-        let randomIndex = Math.floor(Math.random() * allowedCharacters.length)
-        password += allowedCharacters[randomIndex]
-    }
-    return password
-}
+// }
 
-function generatePasswords() {
-    let password1 = createPassword()
-    let password2 = createPassword()
-    passwordEl1.textContent = password1
-    passwordEl2.textContent = password2
-    
-}
 
- function copyToClipboard(name) {
-      // Select the text inside the div
-      const textToCopy = document.getElementById(name);
-      const range = document.createRange();
-      range.selectNode(textToCopy);
-      window.getSelection().removeAllRanges();
-      window.getSelection().addRange(range);
 
-      // Execute the copy command
-      document.execCommand('copy');
 
-      // Clean up and notify the user
-      window.getSelection().removeAllRanges();
-      alert('Text has been copied to the clipboard');
-    }
+// input from user taken
+// list with all 6 conversions 
+// render each line using indexing (probably)
+
+
+inputEl.addEventListener("input", function(){
+  let width = Math.max(117, (this.value.length + 1) * 35);
+
+  // Set the width of the input element
+  this.style.width = width + 'px';
+})
